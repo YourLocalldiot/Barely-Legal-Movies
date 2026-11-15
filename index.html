@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>BARELY LEGAL MOVIES - Terminal Movie Player</title>
+  <meta name="description" content="Free, ad-free, retro terminal-style movie site. Browse any film via OMDb and stream public-domain classics from the Internet Archive.">
+  <meta name="theme-color" content="#000000">
+  <meta name="color-scheme" content="dark">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23000'/%3E%3Ctext x='4' y='23' font-family='monospace' font-size='18' font-weight='bold' fill='%2300ff66'%3E%3E_%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- CRT Screen Overlay Effect -->
+  <div id="crt-overlay" class="crt-overlay" aria-hidden="true"></div>
+
+  <a class="skip-link" href="#main-content">Skip to content</a>
+
+  <div class="app-container">
+
+    <!-- Top Header Bar: quick search + menu -->
+    <header class="terminal-header">
+      <div class="terminal-top-bar">
+        <button type="button" id="logo-home" class="mini-logo" aria-label="Barely Legal Movies home">&gt;_ BLM</button>
+
+        <div class="top-search-wrapper">
+          <span class="search-icon" aria-hidden="true">&gt;</span>
+          <input
+            type="search"
+            id="top-search-input"
+            class="top-search-input"
+            placeholder="SEARCH..."
+            aria-label="Quick search"
+            autocomplete="off"
+            enterkeyhint="search"
+          />
+        </div>
+
+        <!-- Hamburger Menu Button: 3 horizontal lines -->
+        <button type="button" id="menu-toggle-btn" class="hamburger-btn" aria-label="Toggle navigation menu" aria-controls="nav-menu" aria-expanded="false">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </button>
+      </div>
+
+      <!-- Navigation (collapsible list of boxes on mobile, row on desktop) -->
+      <nav id="nav-menu" class="nav-menu-container" aria-label="Main navigation">
+        <button type="button" class="nav-box-item active" data-tab="home">
+          <span>[1] HOME</span>
+          <span class="nav-arrow" aria-hidden="true">&gt;&gt;</span>
+        </button>
+        <button type="button" class="nav-box-item" data-tab="new">
+          <span>[2] NEW RELEASES</span>
+          <span class="nav-arrow" aria-hidden="true">&gt;&gt;</span>
+        </button>
+        <button type="button" class="nav-box-item" data-tab="classics">
+          <span>[3] FREE CLASSICS</span>
+          <span class="nav-arrow" aria-hidden="true">&gt;&gt;</span>
+        </button>
+        <button type="button" class="nav-box-item" data-tab="settings">
+          <span>[4] SETTINGS</span>
+          <span class="nav-arrow" aria-hidden="true">&gt;&gt;</span>
+        </button>
+      </nav>
+    </header>
+
+    <!-- Main Dynamic Content Views -->
+    <main id="main-content" class="content-area" tabindex="-1">
+
+      <!-- HOME TAB -->
+      <section id="tab-home" class="tab-content active" aria-label="Home">
+        <div class="home-banner-wrapper">
+          <h1 class="home-logo-box">---BARELY LEGAL MOVIES---</h1>
+        </div>
+
+        <form class="search-box-container home-search" role="search" onsubmit="return false;">
+          <input
+            type="search"
+            id="home-search-input"
+            class="terminal-input"
+            placeholder="Enter movie name"
+            aria-label="Enter movie name"
+            autocomplete="off"
+            enterkeyhint="search"
+          />
+          <button type="button" id="home-search-btn" class="terminal-btn">SEARCH</button>
+        </form>
+
+        <p class="tagline-text">barelylegalmovies.to - Just a better place for watching online movies for free!<br>No ads. No trackers. Public-domain films stream in full.</p>
+
+        <div id="home-search-results" aria-live="polite"></div>
+      </section>
+
+      <!-- NEW RELEASES TAB -->
+      <section id="tab-new" class="tab-content" aria-label="New releases">
+        <h2 class="path-header">--- LATEST TERMINAL RELEASES ---</h2>
+        <p class="section-note">Recent theatrical releases. Still under copyright: pick one to see details, the trailer, and where to watch it legally.</p>
+        <div id="new-movies" aria-live="polite"></div>
+      </section>
+
+      <!-- FREE CLASSICS TAB -->
+      <section id="tab-classics" class="tab-content" aria-label="Free classics">
+        <h2 class="path-header">--- FREE PUBLIC-DOMAIN CLASSICS ---</h2>
+        <p class="section-note">Full movies, free and legal, streamed from the Internet Archive. Search works too: try "Nosferatu" or "My Man Godfrey".</p>
+        <div id="classic-movies" aria-live="polite"></div>
+      </section>
+
+      <!-- SETTINGS TAB -->
+      <section id="tab-settings" class="tab-content" aria-label="Settings">
+        <h2 class="path-header">--- TERMINAL SYSTEM SETTINGS ---</h2>
+
+        <div class="settings-group">
+          <div class="settings-title">[ OMDb API CONFIG ]</div>
+          <label for="api-key-input" class="settings-label">CUSTOM API KEY (optional):</label>
+          <div class="search-box-container settings-key">
+            <input type="text" id="api-key-input" class="terminal-input" placeholder="built-in key in use" autocomplete="off" autocapitalize="off" spellcheck="false" />
+            <button type="button" id="save-key-btn" class="terminal-btn">SAVE</button>
+            <button type="button" id="reset-key-btn" class="terminal-btn">RESET</button>
+          </div>
+          <p id="settings-msg" class="settings-msg" role="status"></p>
+          <p class="settings-hint">Free keys: <a href="https://www.omdbapi.com/apikey.aspx" target="_blank" rel="noopener noreferrer">omdbapi.com/apikey.aspx</a></p>
+        </div>
+
+        <div class="settings-group">
+          <div class="settings-title">[ DISPLAY &amp; GRAPHICS ]</div>
+          <div class="settings-row">
+            <label for="crt-toggle">CRT SCANLINE EFFECT:</label>
+            <input type="checkbox" id="crt-toggle" class="terminal-check" checked />
+          </div>
+          <div class="settings-row">
+            <span>FONT FAMILY:</span>
+            <span>Consolas, Monospace</span>
+          </div>
+          <div class="settings-row">
+            <span>THEME COLOR:</span>
+            <span>#00FF66 (Pitch Black &amp; Neon)</span>
+          </div>
+        </div>
+
+        <div class="settings-group">
+          <div class="settings-title">[ SYSTEM INFO ]</div>
+          <div class="settings-row">
+            <span>MOVIE DATA:</span>
+            <span>OMDb API v1</span>
+          </div>
+          <div class="settings-row">
+            <span>FREE STREAMS:</span>
+            <span>Internet Archive (public domain)</span>
+          </div>
+          <div class="settings-row">
+            <span>ADS / TRACKERS:</span>
+            <span>NONE</span>
+          </div>
+          <div class="settings-row">
+            <span>STATUS:</span>
+            <span>ONLINE <span class="blink" aria-hidden="true">●</span></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- PLAYER VIEW -->
+      <section id="tab-player" class="tab-content" aria-label="Movie player">
+        <h2 id="player-path-header" class="path-header">Home/Movies/...</h2>
+
+        <div class="player-layout">
+          <div class="player-container">
+            <div id="player-screen" class="player-screen"></div>
+            <div class="player-controls">
+              <span id="player-runtime">▶ --</span>
+              <span id="player-rated">[--]</span>
+              <span id="player-source" class="push-right">[SRC: --]</span>
+            </div>
+          </div>
+
+          <div id="player-details" class="detail-box"></div>
+        </div>
+
+        <button type="button" id="player-back-btn" class="terminal-btn block-btn">
+          &lt;&lt; BACK
+        </button>
+      </section>
+
+    </main>
+
+    <!-- Bottom Terminal Log / Status Bar -->
+    <footer class="terminal-status-bar">
+      <span id="status-text" role="status">SYS_READY &gt;&gt; ENTER COMMAND OR MOVIE TITLE</span>
+      <span class="blink" aria-hidden="true">_</span>
+    </footer>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

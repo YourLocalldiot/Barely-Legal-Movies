@@ -22,6 +22,6 @@
    ========================================================= */
 
 window.BLM_CONFIG = {
-  TMDB_API_KEY: '',
+  TMDB_API_KEY: '585982bbd9071fc5e2e3e837f52f98ea',
   OMDB_API_KEY: '47096182'
 };

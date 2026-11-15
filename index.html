@@ -97,7 +97,7 @@
       <!-- NEW RELEASES TAB -->
       <section id="tab-new" class="tab-content" aria-label="New releases">
         <h2 class="path-header">--- LATEST TERMINAL RELEASES ---</h2>
-        <p class="section-note">Recent theatrical releases. Still under copyright: pick one to see details, the trailer, and where to watch it legally.</p>
+        <p id="new-note" class="section-note">Recent theatrical releases. Still under copyright: pick one to see details, the trailer, and where to watch it legally.</p>
         <div id="new-movies" aria-live="polite"></div>
       </section>
 
@@ -113,10 +113,22 @@
         <h2 class="path-header">--- TERMINAL SYSTEM SETTINGS ---</h2>
 
         <div class="settings-group">
-          <div class="settings-title">[ OMDb API CONFIG ]</div>
-          <label for="api-key-input" class="settings-label">CUSTOM API KEY (optional):</label>
+          <div class="settings-title">[ TMDB API CONFIG ] <span class="settings-tag">PRIMARY</span></div>
+          <label for="tmdb-key-input" class="settings-label">TMDB API KEY or READ ACCESS TOKEN:</label>
           <div class="search-box-container settings-key">
-            <input type="text" id="api-key-input" class="terminal-input" placeholder="built-in key in use" autocomplete="off" autocapitalize="off" spellcheck="false" />
+            <input type="password" id="tmdb-key-input" class="terminal-input" placeholder="not set" autocomplete="off" autocapitalize="off" spellcheck="false" />
+            <button type="button" id="tmdb-save-btn" class="terminal-btn">SAVE</button>
+            <button type="button" id="tmdb-reset-btn" class="terminal-btn">RESET</button>
+          </div>
+          <p id="tmdb-msg" class="settings-msg" role="status"></p>
+          <p class="settings-hint">Free keys: <a href="https://www.themoviedb.org/settings/api" target="_blank" rel="noopener noreferrer">themoviedb.org/settings/api</a>. Saved in this browser only.</p>
+        </div>
+
+        <div class="settings-group">
+          <div class="settings-title">[ OMDb API CONFIG ] <span class="settings-tag">FALLBACK</span></div>
+          <label for="api-key-input" class="settings-label">CUSTOM OMDb KEY (optional):</label>
+          <div class="search-box-container settings-key">
+            <input type="password" id="api-key-input" class="terminal-input" placeholder="built-in key in use" autocomplete="off" autocapitalize="off" spellcheck="false" />
             <button type="button" id="save-key-btn" class="terminal-btn">SAVE</button>
             <button type="button" id="reset-key-btn" class="terminal-btn">RESET</button>
           </div>
@@ -144,7 +156,7 @@
           <div class="settings-title">[ SYSTEM INFO ]</div>
           <div class="settings-row">
             <span>MOVIE DATA:</span>
-            <span>OMDb API v1</span>
+            <span id="data-source">OMDb API v1</span>
           </div>
           <div class="settings-row">
             <span>FREE STREAMS:</span>
@@ -158,6 +170,7 @@
             <span>STATUS:</span>
             <span>ONLINE <span class="blink" aria-hidden="true">●</span></span>
           </div>
+          <p id="tmdb-attribution" class="settings-hint attribution" hidden>This product uses the TMDB API but is not endorsed or certified by TMDB.</p>
         </div>
       </section>
 
@@ -193,6 +206,7 @@
 
   </div>
 
+  <script src="config.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
